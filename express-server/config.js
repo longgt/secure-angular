@@ -21,6 +21,7 @@ module.exports = {
     session: { 
         name: 'keycloak-sessionid',
         secret: 'abda5a3bfd06',
+        fileStorePath: 'file-store-sessions',
         sameSite: 'lax'
     }
 };
