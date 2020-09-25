@@ -5,12 +5,13 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AuthService {
+  private API_URL = '/api';
 
   constructor(private http: HttpClient) { }
 
   authenticated(): Promise<boolean> {
     return new Promise<boolean>(resolve => {
-      this.http.get('http://localhost:3000/token/verify', {withCredentials: true}).subscribe(() => {
+      this.http.get(`${this.API_URL}/token/verify`, {withCredentials: true}).subscribe(() => {
         resolve(true);
       }, (err) => {
         console.log('authenticated', err);

@@ -10,17 +10,17 @@ import { Project } from '../../models/gitlab';
   providedIn: 'root'
 })
 export class UserService {
-  private SERVER_URL = "http://localhost:3000";
+  private API_URL = '/api';
 
   constructor(private httpClient: HttpClient) { }
 
   @Cache({ ttl: 60 })
   public get(): Observable<UserData> {
-    return this.httpClient.get<UserData>(`${this.SERVER_URL}/user`, {withCredentials: true});
+    return this.httpClient.get<UserData>(`${this.API_URL}/user`, {withCredentials: true});
   }
 
   @Cache({ ttl: 3600 })
   public getProjects(): Observable<Project[]> {
-    return this.httpClient.get<Project[]>(`${this.SERVER_URL}/api/projects`, {withCredentials: true});
+    return this.httpClient.get<Project[]>(`${this.API_URL}/projects`, {withCredentials: true});
   }
 }
