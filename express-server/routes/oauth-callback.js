@@ -4,6 +4,7 @@ const qs = require('qs');
 const axios = require('axios');
 const config = require('../config');
 const GitlabToken = require('../models/token.gitlab');
+const GitHubToken = require('../models/token.github');
 const keycloak = require('../keycloak-config.js').getKeycloak();
 
 /**
@@ -46,9 +47,16 @@ router.get('/', (req, res) => {
                       'Accept': 'application/json'
                     }
                   }).then(idpRes => {
-                    const token = new GitlabToken();
-                    token.save(idpRes.data);
-                    req.session.idpGrant = token;
+                    if (idp === 'gitlab') {
+                      const token = new GitlabToken();
+                      token.save(idpRes.data);
+                      req.session.idpGrant = token;
+                    } else if (idp === 'github') {
+                        const params = new URLSearchParams(idpRes.data);
+                        const token = new GitHubToken(params.get('access_token'), params.get('token_type'), params.get('scope'));
+                        req.session.idpGrant = token;
+                        console.log(idp, params, token);
+                    }
                   });
                 });
               }
