@@ -9,9 +9,9 @@
     <div class="external-info">
         <div class="projects-container" *ngIf="projects?.length > 0">
             <div *ngFor="let project of projects" class="project-info">
-                <div>{{project.name}}</div>
-                <div>{{project.description}}</div>
-                <div><a href="{{project.http_url_to_repo}}">{{project.http_url_to_repo}}</a></div>
+                <div class="title">{{project.name}}</div>
+                <div class="description">{{project.description}}</div>
+                <div><a target="_blank" href="{{project.http_url_to_repo}}">{{project.http_url_to_repo}}</a></div>
             </div>
         </div>
     </div>

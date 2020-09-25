@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { UserData } from './models/user-data';
-import { Project } from './models/gitlab';
-import { Cache } from './decorators/cache.decorator';
+
+import { Cache } from '../decorators/cache.decorator';
+import { UserData } from '../../models/user-data';
+import { Project } from '../../models/gitlab';
 
 @Injectable({
   providedIn: 'root'

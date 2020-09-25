@@ -3,6 +3,7 @@ const router = express.Router();
 const qs = require('qs');
 const axios = require('axios');
 const config = require('../config');
+const GitlabToken = require('../models/token.gitlab');
 const keycloak = require('../keycloak-config.js').getKeycloak();
 
 /**
@@ -45,7 +46,9 @@ router.get('/', (req, res) => {
                       'Accept': 'application/json'
                     }
                   }).then(idpRes => {
-                    req.session.idpGrant = idpRes.data;
+                    const token = new GitlabToken();
+                    token.save(idpRes.data);
+                    req.session.idpGrant = token;
                   });
                 });
               }

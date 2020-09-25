@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { finalize, switchMap, take } from 'rxjs/operators';
-import { UserService } from '../user.service';
-import { UserData } from '../models/user-data';
-import { Project } from '../models/gitlab';
+import { UserService } from '../../shared/services/user.service';
+import { UserData } from '../../models/user-data';
+import { Project } from '../../models/gitlab';
 
 @Component({
   selector: 'app-home',
