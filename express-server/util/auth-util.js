@@ -35,7 +35,21 @@ function createCodeChallenge(verifier, method) {
     return method === 'S256' ? base64URLEncode(sha256(verifier)) : verifier;
 }
 
+/**
+ * Simple authentication middleware
+ */
+function simpleAuthMiddleware() {
+    return (req, res, next) => {
+        if (req.kauth.grant) {
+            next();
+        } else {
+            res.status(401).send();
+        }
+    }
+}
+
 module.exports = {
     createCodeVerifier,
-    createCodeChallenge
+    createCodeChallenge,
+    simpleAuthMiddleware
 };

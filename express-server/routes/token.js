@@ -1,12 +1,11 @@
 const jwt = require('jsonwebtoken');
 const express = require('express');
 const router = express.Router();
-const keycloak = require('../keycloak-config.js').getKeycloak();
 
 const config = require('../config');
 let pemKey;
 
-router.get('/verify', keycloak.protect(), (req, res) => {
+router.get('/verify', (req, res) => {
     const grant = req.kauth.grant || {};
     const token = grant.access_token.token;
     jwt.verify(token, getKey, { complete: true }, (err, decoded) => {
@@ -20,7 +19,7 @@ router.get('/verify', keycloak.protect(), (req, res) => {
     });
 });
 
-router.get('/hasRole', keycloak.protect(), (req, res) => {
+router.get('/hasRole', (req, res) => {
     const token = req.kauth.grant.access_token;
     const role = req.query.role;
     if (role && token.hasRole(role)) {

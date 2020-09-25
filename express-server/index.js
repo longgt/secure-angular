@@ -3,6 +3,7 @@ const cors = require('cors');
 
 const config = require('./config');
 const store = require('./store/session');
+const simpleAuthMiddleware = require('./util/auth-util').simpleAuthMiddleware;
 
 const app = express();
 app.use(express.json());
@@ -45,14 +46,14 @@ const keycloak = require('./keycloak-config.js').initKeycloak(store.getStore());
 app.use(keycloak.middleware());
 
 // Secured Rest API
-app.use('/api', require('./routes/api.js'));
+app.use('/api/user', simpleAuthMiddleware(), require('./routes/user.js'));
+app.use('/api/projects', simpleAuthMiddleware(), require('./routes/projects.js'));
+app.use('/api/token', simpleAuthMiddleware(), require('./routes/token.js'));
 
 // NG application middlewares
 app.use('/oauth-callback', require('./routes/oauth-callback'));
 app.use('/login', require('./routes/login'));
-app.use('/user', require('./routes/user'));
 app.use('/logout', require('./routes/logout'));
-app.use('/token', require('./routes/token'));
 
 app.get('/', (req, res) => {
   res.send("Server is up!");
