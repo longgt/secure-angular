@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { finalize, switchMap, take } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { finalize, switchMap, take, tap } from 'rxjs/operators';
 import { UserService } from '../../shared/services/user.service';
 import { UserData } from '../../models/user-data';
 import { Project } from '../../models/gitlab';
+import { Repository } from '../../models/github';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +14,7 @@ import { Project } from '../../models/gitlab';
 export class HomeComponent implements OnInit {
   user: UserData = { email: null };
   projects: Project[];
+  repos: Repository[];
   loaded: boolean = false;
 
   constructor(private userService: UserService) {}
@@ -19,9 +22,16 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.userService.get()
       .pipe(
-        switchMap((data) => {
+        switchMap(data => {
           this.user = data;
-          return this.userService.getProjects();
+
+          if (this.user.idp === 'gitlab') {
+            return this.userService.getProjects().pipe(tap(projects => this.projects = projects));
+          } else if (this.user.idp === 'github') {
+            return this.userService.getRepos().pipe(tap(repos => this.repos = repos));
+          } else {
+            return of([]);
+          }
         }),
         take(1),
         finalize(() => {
@@ -29,9 +39,7 @@ export class HomeComponent implements OnInit {
         })
       )
       .subscribe(
-        projects => {
-          this.projects = projects;
-        },
+        () => {},
         error => {
           console.log(error);
         }

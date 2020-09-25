@@ -14,5 +14,13 @@
                 <div><a target="_blank" href="{{project.http_url_to_repo}}">{{project.http_url_to_repo}}</a></div>
             </div>
         </div>
+        <div class="repos-container" *ngIf="repos?.length > 0">
+            <div *ngFor="let repo of repos" class="project-info">
+                <div class="title">{{repo.name}}</div>
+                <div class="description">{{repo.description}}</div>
+                <div class="owner"><a target="_blank" href="https://github.com/{{repo.owner?.login}}">{{repo.owner?.login}}</a></div>
+                <div><a target="_blank" href="{{repo.clone_url}}">{{repo.clone_url}}</a></div>
+            </div>
+        </div>
     </div>
 </div>

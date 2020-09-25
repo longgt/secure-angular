@@ -4,4 +4,6 @@ export interface UserData {
     phone_number?: string;
     birthdate?: string;
     preferred_username?: string;
+    /** Identifier provider */
+    idp?: string;
 }
