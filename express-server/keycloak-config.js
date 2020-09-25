@@ -6,6 +6,7 @@ const keycloakConfig = {
     serverUrl: config.hosts.auth,
     realm: config.realm,
     realmPublicKey: config.realmPublicKey,
+    verifyTokenAudience: config.verifyTokenAudience,
     credentials: {
         secret: config.clientSecret
     }

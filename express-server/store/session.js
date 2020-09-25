@@ -19,5 +19,6 @@ function getStore() {
 }
 
 module.exports = {
-    getStore
+    getStore,
+    session
 };

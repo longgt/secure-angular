@@ -1,10 +1,8 @@
 const express = require('express');
-const session = require('express-session');
 const cors = require('cors');
 
 const config = require('./config');
 const store = require('./store/session');
-
 
 const app = express();
 app.use(express.json());
@@ -16,7 +14,7 @@ app.use(cors({
 }));
 
 // configure sessions
-app.use(session(
+app.use(store.session(
   {
     name: config.session.name,
     store: store.getStore(),
@@ -56,7 +54,7 @@ app.use('/user', require('./routes/user'));
 app.use('/logout', require('./routes/logout'));
 app.use('/token', require('./routes/token'));
 
-app.get('/', function (req, res) {
+app.get('/', (req, res) => {
   res.send("Server is up!");
 });
 

@@ -32,9 +32,30 @@ router.get('/', (req, res) => {
         keycloak.grantManager.createGrant(response.data).then(grant => {
           keycloak.storeGrant(grant, req, res);
           req.kauth.grant = grant;
+          let p = Promise.resolve();
+          // External idP
+          if (grant.access_token) {
+            try {
+              const { idp } = grant.access_token.content;
+              if (idp) {
+                p = p.then(() => {
+                  return axios.get(`${config.hosts.auth}/realms/${config.realm}/broker/${idp}/token`, {
+                    headers: {
+                      'Authorization': `Bearer ${grant.access_token.token}`,
+                      'Accept': 'application/json'
+                    }
+                  }).then(idpRes => {
+                    req.session.idpGrant = idpRes.data;
+                  });
+                });
+              }
+            } catch (e) {
+
+            }
+          }
   
           // redirect to the Angular app
-          res.redirect(`${config.hosts.client}`);
+          p.then(() => res.redirect(`${config.hosts.client}`));
         });
       }).catch (error => {
           console.log(`Error when exchanging code to token: ${error}`);
