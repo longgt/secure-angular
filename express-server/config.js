@@ -12,7 +12,7 @@ module.exports = {
         auth: 'http://localhost:8080/auth',
         client: 'http://localhost:4200',
         // Local GitLab instance
-        gitlab: 'https://gitlab.d-circle.com'
+        gitlab: 'https://gitlab.example.com'
     },
 
     // Ports
