@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 import { UserData } from '../../models/user-data';
 import { UserService } from '../../shared/services/user.service';
 
@@ -14,8 +15,7 @@ export class LoginComponent implements OnInit {
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
-    this.userService.get().subscribe(data => {
-      console.log('Login', data);
+    this.userService.get().pipe(take(1)).subscribe(data => {
       if (data.preferred_username) {
         this.router.navigateByUrl('/home');
       }
