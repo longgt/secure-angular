@@ -51,11 +51,12 @@ router.get('/', (req, res) => {
                       const token = new GitlabToken();
                       token.save(idpRes.data);
                       req.session.idpGrant = token;
+                      req.session.idp = idp;
                     } else if (idp === 'github') {
                         const params = new URLSearchParams(idpRes.data);
                         const token = new GitHubToken(params.get('access_token'), params.get('token_type'), params.get('scope'));
                         req.session.idpGrant = token;
-                        console.log(idp, params, token);
+                        req.session.idp = idp;
                     }
                   });
                 });
