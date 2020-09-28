@@ -47,8 +47,9 @@ app.use(keycloak.middleware());
 
 // Secured Rest API
 app.use('/api/user', simpleAuthMiddleware(), require('./routes/user.js'));
-app.use('/api/projects', simpleAuthMiddleware(), require('./routes/projects.js'));
-app.use('/api/repos', simpleAuthMiddleware(), require('./routes/repos.js'));
+app.use('/api/projects', simpleAuthMiddleware({idp: 'gitlab'}), require('./routes/projects.js'));
+app.use('/api/todos', simpleAuthMiddleware({idp: 'gitlab'}), require('./routes/todos.js'));
+app.use('/api/repos', simpleAuthMiddleware({idp: 'github'}), require('./routes/repos.js'));
 app.use('/api/token', simpleAuthMiddleware(), require('./routes/token.js'));
 
 // NG application middlewares

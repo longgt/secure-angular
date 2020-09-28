@@ -38,10 +38,24 @@ function createCodeChallenge(verifier, method) {
 /**
  * Simple authentication middleware
  */
-function simpleAuthMiddleware() {
+function simpleAuthMiddleware(config) {
+    const _config = config || {};
     return (req, res, next) => {
         if (req.kauth.grant) {
-            next();
+            if (_config.idp) {
+                const idpGrant = req.session.idpGrant;
+                const idp = req.session.idp;
+
+                if (idpGrant && idp === config.idp) {
+                    next();
+                } else {
+                    res.status(400).send({
+                        message: `${_config.idp} mismatch`
+                    });
+                }
+            } else {
+                next();
+            }
         } else {
             res.status(401).send();
         }
