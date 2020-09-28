@@ -108,3 +108,111 @@ export interface Namespace {
   avatar_url?: any;
   web_url: string;
 }
+export interface GitLabTodo {
+  id: number;
+  project: Project;
+  author: Author;
+  action_name: string;
+  target_type: string;
+  target: Target;
+  target_url: string;
+  body: string;
+  state: string;
+  created_at: string;
+  updated_at: string;
+}
+
+interface Target {
+  id: number | string;
+  iid?: number;
+  project_id?: number;
+  title: string;
+  description?: string;
+  state?: string;
+  created_at: string;
+  updated_at?: string;
+  merged_by?: Author;
+  merged_at?: string;
+  closed_by?: any;
+  closed_at?: any;
+  target_branch?: string;
+  source_branch?: string;
+  user_notes_count?: number;
+  upvotes?: number;
+  downvotes?: number;
+  author?: Author;
+  assignees?: Author[];
+  assignee?: Author;
+  source_project_id?: number;
+  target_project_id?: number;
+  labels?: any[];
+  work_in_progress?: boolean;
+  milestone?: any;
+  merge_when_pipeline_succeeds?: boolean;
+  merge_status?: string;
+  sha?: string;
+  merge_commit_sha?: string;
+  squash_commit_sha?: any;
+  discussion_locked?: any;
+  should_remove_source_branch?: any;
+  force_remove_source_branch?: boolean;
+  reference?: string;
+  references?: References;
+  web_url: string;
+  time_stats?: Timestats;
+  squash?: boolean;
+  task_completion_status?: Taskcompletionstatus;
+  has_conflicts?: boolean;
+  blocking_discussions_resolved?: boolean;
+  subscribed?: boolean;
+  changes_count?: string;
+  diff_refs?: Diffrefs;
+  merge_error?: any;
+  user?: User;
+  short_id?: string;
+  parent_ids?: string[];
+  message?: string;
+  author_name?: string;
+  author_email?: string;
+  authored_date?: string;
+  committer_name?: string;
+  committer_email?: string;
+  committed_date?: string;
+}
+
+interface User {
+  can_merge: boolean;
+}
+
+interface Diffrefs {
+  base_sha: string;
+  head_sha: string;
+  start_sha: string;
+}
+
+interface Taskcompletionstatus {
+  count: number;
+  completed_count: number;
+}
+
+interface Timestats {
+  time_estimate: number;
+  total_time_spent: number;
+  human_time_estimate?: any;
+  human_total_time_spent?: any;
+}
+
+interface References {
+  short: string;
+  relative: string;
+  full: string;
+}
+
+interface Author {
+  id: number;
+  name: string;
+  username: string;
+  state: string;
+  avatar_url: string;
+  web_url: string;
+}

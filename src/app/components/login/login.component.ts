@@ -9,7 +9,7 @@ import { UserService } from '../../shared/services/user.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class SsoLoginComponent implements OnInit {
   user: UserData = { email: null };
   
   constructor(private userService: UserService, private router: Router) { }
@@ -17,10 +17,10 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.userService.get().pipe(take(1)).subscribe(data => {
       if (data.preferred_username) {
-        this.router.navigateByUrl('/home');
+        this.router.navigateByUrl('/welcome');
       }
     }, error => {
-      console.log(error);
+      console.log('login', error);
     });
   }
 }

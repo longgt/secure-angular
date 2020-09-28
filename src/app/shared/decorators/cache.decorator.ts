@@ -22,6 +22,12 @@ export function Cache(options: CacheOptions = { ttl: 60 }) {
       }
 
       if (!argsNotChanged) {
+        // Clear old cache before creating new one
+        if (this[`${propertyKey}_cached`]) {
+          const oldCached = this[`${propertyKey}_cached`] as ReplaySubject<any>;
+          oldCached.complete();
+          oldCached.unsubscribe();
+        }
         // args change
         this[`${propertyKey}_cached`] = new ReplaySubject(1, ttl);
       }

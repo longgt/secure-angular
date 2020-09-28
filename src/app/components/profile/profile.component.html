@@ -1,1 +1,25 @@
-<a routerLink="/home">Home</a>
+<div *ngIf="loaded">
+    <div class="basic-info">
+        <div>Email: {{user.email}}</div>
+        <div>Name: {{user.name}}</div>
+        <div>Birthday: {{user.birthdate}}</div>
+        <div>Phone: {{user.phone_number}}</div>
+    </div>
+    <div class="external-info">
+        <div class="projects-container" *ngIf="projects?.length > 0">
+            <div *ngFor="let project of projects" class="project-info">
+                <div class="title">{{project.name}}</div>
+                <div class="description">{{project.description}}</div>
+                <div><a target="_blank" href="{{project.http_url_to_repo}}">{{project.http_url_to_repo}}</a></div>
+            </div>
+        </div>
+        <div class="repos-container" *ngIf="repos?.length > 0">
+            <div *ngFor="let repo of repos" class="project-info">
+                <div class="title">{{repo.name}}</div>
+                <div class="description">{{repo.description}}</div>
+                <div class="owner"><a target="_blank" href="https://github.com/{{repo.owner?.login}}">{{repo.owner?.login}}</a></div>
+                <div><a target="_blank" href="{{repo.clone_url}}">{{repo.clone_url}}</a></div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<nz-list [nzLoading]="loading">
+    <nz-list-item *ngFor="let todo of todos">
+        <nz-list-item-meta>
+            <nz-list-item-meta-description>
+                <div>{{todo.target_type}} - {{todo.author?.name}}</div>
+            </nz-list-item-meta-description>
+            <nz-list-item-meta-title>
+                <a target="_blank" href="{{todo.target_url}}">{{todo.target_url}}</a>
+            </nz-list-item-meta-title>
+            <nz-list-item-meta-description>
+                <div [innerHTML]="todo.body | replaceNewline"></div>
+            </nz-list-item-meta-description>
+        </nz-list-item-meta>
+        <ul nz-list-item-actions *ngIf="todo.state !== 'done'">
+            <nz-list-item-action><a (click)="markAsDone(todo)">Done</a></nz-list-item-action>
+          </ul>
+    </nz-list-item>
+    <nz-list-empty *ngIf="todos.length === 0" nzNoResult="Todos were not found!"></nz-list-empty>
+</nz-list>

@@ -45,4 +45,8 @@ export class HomeComponent implements OnInit {
         }
       );
   }
+
+  logout() {
+    location.replace('/logout');
+  }
 }

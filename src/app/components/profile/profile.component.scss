@@ -1,0 +1,29 @@
+:host{
+    .project-info {
+        border-bottom: 1px solid #ccc;
+        padding: 5px 8px;
+    }
+
+    .title {
+        font-size: 1.7rem;
+        font-weight: bold;
+    }
+
+    .description {
+        font-size: 1.2rem;
+        color: gray;
+    }
+
+    .owner {
+        font-weight: bold;
+
+        a {
+            text-decoration: none;
+            color: black;
+            
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}

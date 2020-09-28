@@ -1,4 +1,70 @@
-<h1>
-  My Secure Angular Application
-</h1>
-<router-outlet></router-outlet>
+<nz-layout class="app-layout">
+  <nz-header>
+    <div nz-row nzAlign="middle" nzJustify="space-between">
+      <div class="app-header" nz-col>
+        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+            <i class="trigger"
+               nz-icon
+               [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+            ></i>
+        </span>
+      </div>
+      <div nz-col>
+        <nz-space>
+          <nz-space-item>
+            <ng-container *ngIf="user; else notLogIn">
+              <a nz-dropdown [nzDropdownMenu]="menu">{{user.name}}</a>
+              <nz-dropdown-menu #menu="nzDropdownMenu">
+                <ul nz-menu nzSelectable>
+                  <li nz-menu-item (click)="profile()"><i class="anticon anticon-user mr-sm"></i>Profile</li>
+                  <li nz-menu-item [nzDisabled]="true"><i class="anticon anticon-setting mr-sm"></i>Settings</li>
+                  <li nz-menu-divider></li>
+                  <li nz-menu-item (click)="logout()"><i class="anticon anticon-setting mr-sm"></i>Logout</li>
+                </ul>
+              </nz-dropdown-menu>
+            </ng-container>
+            <ng-template #notLogIn>
+              <a (click)="login()">Login</a>
+            </ng-template>
+          </nz-space-item>
+        </nz-space>
+      </div>
+    </div>      
+  </nz-header>
+
+  <nz-layout>
+    <nz-sider class="menu-sidebar"
+              nzCollapsible
+              nzWidth="256px"
+              nzBreakpoint="md"
+              [(nzCollapsed)]="isCollapsed"
+              [nzTrigger]="null">
+      <div class="sidebar-logo">
+        <a href="https://ng.ant.design/" target="_blank">
+          <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
+          <h1>Ant Design Of Angular</h1>
+        </a>
+      </div>
+      <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+        <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
+          <ul>
+            <li nz-menu-item nzMatchRouter>
+              <a routerLink="/welcome">Welcome</a>
+            </li>
+            <li nz-menu-item nzMatchRouter [nzDisabled]="user?.idp !== 'gitlab'">
+              <a routerLink="/todos">Todos</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nz-sider>
+
+    <nz-content>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+
+  <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
+</nz-layout>
