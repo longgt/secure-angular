@@ -1,7 +1,8 @@
 {
   "extends": "tslint:recommended",
   "rulesDirectory": [
-    "codelyzer"
+    "codelyzer",
+    "node_modules/nz-tslint-rules"
   ],
   "rules": {
     "align": {
@@ -147,6 +148,7 @@
       "element",
       "app",
       "kebab-case"
-    ]
+    ],
+    "nz-secondary-entry-imports": true
   }
 }
